@@ -1,5 +1,5 @@
-ent-ToolboxBase = { ent-BaseItem }
-    .desc = { ent-BaseItem.desc }
+ent-ToolboxBase = { ent-BaseStorageItem }
+    .desc = { ent-BaseStorageItem.desc }
 ent-ToolboxEmergency = аварийный ящик для инструментов
     .desc = Ярко-красный ящик для инструментов, укомплектованный аварийными инструментами.
 ent-ToolboxMechanical = технический ящик для инструментов
@@ -18,5 +18,3 @@ ent-ToolboxSyndicate = чёрный ящик для инструментов
 # Corvax-HiddenDesc-End
 ent-ToolboxGolden = золотой ящик для инструментов
     .desc = Ящик для инструментов из чистого золота. Рэперы убили бы за него.
-ent-ToolboxThief = ящик воровских инструментов неопределённости
-    .desc = Здесь лежат ваши излюбленные воровские штучки. Осталось вспомнить, какие именно.

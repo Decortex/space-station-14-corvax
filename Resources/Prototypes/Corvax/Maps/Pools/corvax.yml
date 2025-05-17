@@ -2,6 +2,7 @@
   id: CorvaxMapPool
   maps:
   # Highpop 55+
+  - CorvaxAxiom
   - CorvaxDelta
   - CorvaxAvrite
   - CorvaxAstra

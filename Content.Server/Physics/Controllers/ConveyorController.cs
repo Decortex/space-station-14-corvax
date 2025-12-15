@@ -49,10 +49,10 @@ public sealed class ConveyorController : SharedConveyorController
 
         }
 
-        component.State = component.InitialState;
-
-        UpdateAppearance(uid, component);
-        Dirty(uid, component);
+        if (component.InitialState != ConveyorState.Off)
+        {
+            SetState(uid, component.InitialState, component);
+        }
     }
 
     private void OnConveyorShutdown(EntityUid uid, ConveyorComponent component, ComponentShutdown args)

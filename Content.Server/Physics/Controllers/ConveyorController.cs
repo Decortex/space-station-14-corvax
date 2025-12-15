@@ -48,6 +48,11 @@ public sealed class ConveyorController : SharedConveyorController
                                        CollisionGroup.Impassable), hard: false, body: physics);
 
         }
+
+        component.State = component.InitialState;
+
+        UpdateAppearance(uid, component);
+        Dirty(uid, component);
     }
 
     private void OnConveyorShutdown(EntityUid uid, ConveyorComponent component, ComponentShutdown args)

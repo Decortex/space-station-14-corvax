@@ -3,7 +3,6 @@ using System.Linq;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using Content.Shared.Labels.Components;
-using Robust.Shared.Localization;
 using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 
@@ -44,7 +43,7 @@ public static class EntityNameDuplicatesJsonGenerator
 
                 var label = GetLabel(p);
 
-                var rawSuffix = TextTools.GetEditorSuffix(p, prototypeManager, loc);
+                var rawSuffix = p.EditorSuffix;
                 var suffix = string.Empty;
                 if (!string.IsNullOrWhiteSpace(rawSuffix))
                 {

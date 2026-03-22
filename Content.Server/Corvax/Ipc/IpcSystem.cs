@@ -13,6 +13,7 @@ using Content.Shared.Movement.Systems;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
 using Content.Shared.Popups;
+using Content.Shared.Power;
 using Content.Shared.Power.EntitySystems;
 using Content.Shared.PowerCell;
 using Content.Shared.PowerCell.Components;
@@ -51,6 +52,22 @@ public sealed partial class IpcSystem : EntitySystem
         {
             subs.Event<IpcFaceSelectMessage>(OnFaceSelected);
         });
+        SubscribeLocalEvent<IpcComponent, PowerCellSlotEmptyEvent>(OnPowerCellEmpty);
+        SubscribeLocalEvent<IpcComponent, BatteryStateChangedEvent>(OnBatteryStateChanged);
+        SubscribeLocalEvent<IpcComponent, ChargeChangedEvent>(OnChargeChanged);
+    }
+
+    private void OnPowerCellEmpty(EntityUid uid, IpcComponent component, ref PowerCellSlotEmptyEvent args)
+    {
+        UpdateBatteryAlert((uid, component));
+    }
+    private void OnBatteryStateChanged(EntityUid uid, IpcComponent component, ref BatteryStateChangedEvent args)
+    {
+        UpdateBatteryAlert((uid, component));
+    }
+    private void OnChargeChanged(EntityUid uid, IpcComponent component, ref ChargeChangedEvent args)
+    {
+        UpdateBatteryAlert((uid, component));
     }
 
     private void OnMapInit(EntityUid uid, IpcComponent component, MapInitEvent args)
@@ -99,27 +116,22 @@ public sealed partial class IpcSystem : EntitySystem
     }
     private void UpdateBatteryAlert(Entity<IpcComponent> ent, PowerCellSlotComponent? slot = null)
     {
-
-
-        if (!_powerCell.TryGetBatteryFromSlot(ent.Owner, out var battery) || _battery.GetCharge(battery.Value.AsNullable()) / battery.Value.Comp.MaxCharge < 0.01f)
+        if (!_powerCell.TryGetBatteryFromSlot(ent.Owner, out var battery)
+            || _battery.GetCharge(battery.Value.AsNullable()) / battery.Value.Comp.MaxCharge < 0.01f)
         {
             _alerts.ClearAlert(ent.Owner, ent.Comp.BatteryAlert);
             _alerts.ShowAlert(ent.Owner, ent.Comp.NoBatteryAlert);
-
             _movementSpeedModifier.RefreshMovementSpeedModifiers(ent.Owner);
             return;
         }
-
-        var chargePercent = (short)MathF.Round(_battery.GetCharge(battery.Value.AsNullable()) / battery.Value.Comp.MaxCharge * 10f);
-
+        var chargePercent = (short)MathF.Round(
+            _battery.GetCharge(battery.Value.AsNullable()) / battery.Value.Comp.MaxCharge * 10f);
         if (chargePercent == 0 && _powerCell.HasDrawCharge(ent.Owner))
             chargePercent = 1;
 
-
-        _movementSpeedModifier.RefreshMovementSpeedModifiers(ent.Owner);
-
         _alerts.ClearAlert(ent.Owner, ent.Comp.NoBatteryAlert);
         _alerts.ShowAlert(ent.Owner, ent.Comp.BatteryAlert, chargePercent);
+        _movementSpeedModifier.RefreshMovementSpeedModifiers(ent.Owner);
     }
 
     private void OnRefreshMovementSpeedModifiers(EntityUid uid, IpcComponent comp, RefreshMovementSpeedModifiersEvent args)

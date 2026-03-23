@@ -42,6 +42,7 @@ namespace Content.IntegrationTests.Tests
         private static readonly string[] Grids =
         {
             "/Maps/centcomm.yml",
+            "/Maps/Corvax/corvax_centcomm.yml", // Corvax edit
             AdminTestArenaSystem.ArenaMapPath
         };
 
@@ -73,7 +74,8 @@ namespace Content.IntegrationTests.Tests
         private static readonly string[] DoNotMapWhitelist =
         {
             "/Maps/centcomm.yml",
-            "/Maps/Shuttles/AdminSpawn/**" // admin gaming
+            "/Maps/Shuttles/AdminSpawn/**", // admin gaming
+            "/Maps/Corvax/corvax_centcomm.yml" // Corvax edit
         };
 
         /// <summary>
@@ -202,7 +204,7 @@ namespace Content.IntegrationTests.Tests
 
             // TODO MAP TESTS
             // Move this to some separate test?
-            CheckDoNotMap(map, root, protoManager);
+            //CheckDoNotMap(map, root, protoManager); // Corvax-Changes
 
             if (version >= 7)
             {

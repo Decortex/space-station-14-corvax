@@ -11,9 +11,8 @@
 - type: marking
   id: FoxTail
   bodyPart: Tail
-
   groupWhitelist: [Vulpkanin]
-  sponsorOnly: true # Corvax-Sponsors
+  sponsorOnly: false # Corvax-Sponsors
   sprites:
     - sprite: Corvax/Mobs/Customization/vulpkanin.rsi
       state: vulp_tail
@@ -59,7 +58,7 @@
   bodyPart: Snout
 
   groupWhitelist: [Vulpkanin]
-  sponsorOnly: true # Corvax-Sponsors
+  sponsorOnly: false # Corvax-Sponsors
   sprites:
     - sprite: Corvax/Mobs/Customization/vulpkanin.rsi
       state: vulp_face
